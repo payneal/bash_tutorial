@@ -1,0 +1,58 @@
+# bash commands checking exit status
+ping -c 1 google.com
+
+echo $? -> shoul dget exit status of success = 0
+
+-----------------------------------------------
+
+ping -c 1 -w 1 amazon.com
+
+echo $? -> should get exit status of 1
+
+now if you didnt have the -w 1 in the call above it would be golden you are basically saying ping this domain you should get resoponse in one second but wait one second and that is why it fails
+
+to get more info on ping args type: man ping
+
+-------------------------------------------------
+
+ping -c 1 amazon.com blah
+
+echo $? -> should get exit code of 2 
+
+_____________________________________________________
+# double andper sign (&&) meaning and
+
+creating a dir and if it succedes the command after it will be called as well
+
+mkdir /tmp/jason/bak && cp -v /etc/hosts /tmp/jason/bak
+
+echo $? -> exit 1 because /tmp/jason/ doesnt exist
+
+
+if we were to
+mkdir -p /tmp/jason/bak && cp -v /etc/hosts /tmp/jason/bak
+
+echo $? -> exit 0 because /tmp/jason/ is created with -p flag in mkdir
+
+-------------------------------–----------------------
+# or command (||)
+
+cp -v  /etc/hosts /tmp/bak || cp -v /etc/hosts /tmp/
+
+if first command success then 2nd command not ran 
+if first comman fails then second command ran 
+
+-----------------------------------------------------
+# combine commands (;)
+
+ls /etc/linux-release ; hostname
+
+although /etc/linux-release doesnt exist it will still run hostname
+
+combine 3 commands:
+
+hostname ; ps ; uptime
+
+* commands seprated by a semicolon will be executed no matter the exit status of the previous command
+
+
